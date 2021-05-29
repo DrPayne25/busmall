@@ -14,6 +14,11 @@ h3 {
   text-align: center;
 }
 
+ul {
+  margin: 20px;
+  text-align: center;
+}
+
 section {
   background-color: bisque;
   width: max-content;
@@ -36,6 +41,7 @@ main div {
   border-radius: 10px;
 }
 
-main div:hover, section img:hover {
+main div:hover, section img:hover, section:bu {
   cursor: pointer;
 }
+
