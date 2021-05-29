@@ -3,3 +3,39 @@ body{
   background-color: white;
   background-image: linear-gradient(to left, #F0C27B, #4B1248 );
 }
+
+h1 {
+  font-size: 3em;
+  text-align: center;
+}
+
+h3 {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+section {
+  background-color: bisque;
+  width: max-content;
+  margin: auto;
+  margin-top: 20px;
+}
+
+section img {
+  width: 250px;
+  height: 250px;
+  margin: 50px;
+}
+
+main div {
+  background-color: gold;
+  width: max-content;
+  padding: 10px;
+  margin: auto;
+  margin-top: 25px;
+  border-radius: 10px;
+}
+
+main div:hover, section img:hover {
+  cursor: pointer;
+}
