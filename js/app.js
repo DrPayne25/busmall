@@ -4,7 +4,7 @@
 let allProducts = [];
 let clicks = 0;
 let clicksAllowed = 25;
-let myContainer = document.querySelector('section');
+let myContainer = document.querySelector('#products');
 let myButton = document.querySelector('div');
 let imageOne = document.querySelector('section img:first-child');
 let imageTwo = document.querySelector('section img:nth-child(2)');
@@ -55,11 +55,9 @@ function renderRandomProduct(){
       imageHolder.push(uniqueImage);
     }
   }
-
   let ProductOne = imageHolder.shift();
   let ProductTwo = imageHolder.shift();
   let ProductThree = imageHolder.shift();
-
   imageOne.src = allProducts[ProductOne].src;
   imageOne.alt = allProducts[ProductOne].name;
   allProducts[ProductOne].views++;
@@ -71,11 +69,10 @@ function renderRandomProduct(){
   imageThree.src = allProducts[ProductThree].src;
   imageThree.alt = allProducts[ProductThree].name;
   allProducts[ProductThree].views++;
-
-  console.log(`
-  Product One: ${allProducts[ProductOne].views}
-  Product Two: ${allProducts[ProductTwo].views}
-  Product Three: ${allProducts[ProductThree].views}`);
+  // console.log(`
+  // Product One: ${allProducts[ProductOne].views}
+  // Product Two: ${allProducts[ProductTwo].views}
+  // Product Three: ${allProducts[ProductThree].views}`);
 }
 
 //Function that will increments clicks and handles the img Click
@@ -90,12 +87,11 @@ function handleProductClick(event){
     if (clickProduct === allProducts[i].name){
       allProducts[i].clicks++;
     }
-    renderRandomProduct();
-    if(clicks === clicksAllowed){
-      myContainer.removeEventListener('click', handleProductClick);
-      alert('You have clicked 25 times thanks for your input! Click View Results to see results');
-      return;
-    }
+  }
+  renderRandomProduct();
+  if(clicks === clicksAllowed){
+    myContainer.removeEventListener('click', handleProductClick);
+    alert('You have clicked 25 times thanks for your input! Click View Results to see results');
   }
 }
 
