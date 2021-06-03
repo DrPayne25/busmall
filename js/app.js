@@ -69,10 +69,6 @@ function renderRandomProduct(){
   imageThree.src = allProducts[ProductThree].src;
   imageThree.alt = allProducts[ProductThree].name;
   allProducts[ProductThree].views++;
-  // console.log(`
-  // Product One: ${allProducts[ProductOne].views}
-  // Product Two: ${allProducts[ProductTwo].views}
-  // Product Three: ${allProducts[ProductThree].views}`);
 }
 
 //Function that will increments clicks and handles the img Click

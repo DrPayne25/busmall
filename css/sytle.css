@@ -45,3 +45,7 @@ main div:hover, section img:hover, section:bu {
   cursor: pointer;
 }
 
+#myChart {
+  display: none;
+}
+
