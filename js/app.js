@@ -4,11 +4,12 @@
 let allProducts = [];
 let clicks = 0;
 let clicksAllowed = 25;
-let myContainer = document.querySelector('section');
+let myContainer = document.querySelector('#products');
 let myButton = document.querySelector('div');
 let imageOne = document.querySelector('section img:first-child');
 let imageTwo = document.querySelector('section img:nth-child(2)');
 let imageThree = document.querySelector('section img:nth-child(3)');
+let imageHolder = [];
 
 
 //Object Constructor for the Products
@@ -48,13 +49,15 @@ function selectRandomProductIndex(){
 
 //Function to put three products on the screen
 function renderRandomProduct(){
-  let ProductOne = selectRandomProductIndex();
-  let ProductTwo = selectRandomProductIndex();
-  let ProductThree = selectRandomProductIndex();
-  if (ProductOne === ProductTwo || ProductOne === ProductThree || ProductTwo === ProductThree){
-    return renderRandomProduct();
+  while (imageHolder.length < 6) {
+    let uniqueImage = selectRandomProductIndex();
+    if (!imageHolder.includes(uniqueImage)){
+      imageHolder.push(uniqueImage);
+    }
   }
-
+  let ProductOne = imageHolder.shift();
+  let ProductTwo = imageHolder.shift();
+  let ProductThree = imageHolder.shift();
   imageOne.src = allProducts[ProductOne].src;
   imageOne.alt = allProducts[ProductOne].name;
   allProducts[ProductOne].views++;
@@ -66,11 +69,10 @@ function renderRandomProduct(){
   imageThree.src = allProducts[ProductThree].src;
   imageThree.alt = allProducts[ProductThree].name;
   allProducts[ProductThree].views++;
-
   // console.log(`
-  // Product One: ${ProductOne}
-  // Product Two: ${ProductTwo}
-  // Product Three: ${ProductThree}`);
+  // Product One: ${allProducts[ProductOne].views}
+  // Product Two: ${allProducts[ProductTwo].views}
+  // Product Three: ${allProducts[ProductThree].views}`);
 }
 
 //Function that will increments clicks and handles the img Click
@@ -85,30 +87,89 @@ function handleProductClick(event){
     if (clickProduct === allProducts[i].name){
       allProducts[i].clicks++;
     }
-    renderRandomProduct();
-    if(clicks === clicksAllowed){
-      myContainer.removeEventListener('click', handleProductClick);
-      alert('You have clicked 25 times thanks for your input!');
-      return;
-    }
+  }
+  renderRandomProduct();
+  if(clicks === clicksAllowed){
+    myContainer.removeEventListener('click', handleProductClick);
+    alert('You have clicked 25 times thanks for your input! Click View Results to see results');
   }
 }
 
-//Function to render my results to the page
-function renderResults(){
-  let ul = document.querySelector('ul');
-  for (let i = 0; i < allProducts.length; i++){
-    let li = document.createElement('li');
-    li.textContent = `${allProducts[i].name} had ${allProducts[i].views} views and was clicked ${allProducts[i].clicks} times`;
-    ul.appendChild(li);
-  }
-}
 
 //Function for allowing the View Results button
 function handleButtonClick(event){ //eslint-disable-line
   if (clicks === clicksAllowed){
-    renderResults();
+    renderChart();
   }
+}
+
+function renderChart (){
+  let clicks = [];
+  let views = [];
+  let names = [];
+
+  for (let i = 0; i < allProducts.length; i++){
+    clicks.push(allProducts[i].clicks);
+    views.push(allProducts[i].views);
+    names.push(allProducts[i].name);
+  }
+
+  let ctx = document.getElementById('myChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: names,
+      datasets: [{
+        label: '# of Clicks',
+        data: clicks,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: '# of Views',
+        data: views,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
 }
 
 renderRandomProduct();
