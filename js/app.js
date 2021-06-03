@@ -9,6 +9,7 @@ let myButton = document.querySelector('div');
 let imageOne = document.querySelector('section img:first-child');
 let imageTwo = document.querySelector('section img:nth-child(2)');
 let imageThree = document.querySelector('section img:nth-child(3)');
+let imageHolder = [];
 
 
 //Object Constructor for the Products
@@ -51,6 +52,11 @@ function renderRandomProduct(){
   let ProductOne = selectRandomProductIndex();
   let ProductTwo = selectRandomProductIndex();
   let ProductThree = selectRandomProductIndex();
+  while (imageHolder.length < 3) {
+    if(!imageHolder.includes(selectRandomProductIndex)){
+      imageHolder.push(selectRandomProductIndex);
+    }
+  }
   if (ProductOne === ProductTwo || ProductOne === ProductThree || ProductTwo === ProductThree){
     return renderRandomProduct();
   }
@@ -88,7 +94,7 @@ function handleProductClick(event){
     renderRandomProduct();
     if(clicks === clicksAllowed){
       myContainer.removeEventListener('click', handleProductClick);
-      alert('You have clicked 25 times thanks for your input!');
+      alert('You have clicked 25 times thanks for your input! Click View Results to see results');
       return;
     }
   }
