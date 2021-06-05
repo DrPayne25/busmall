@@ -21,26 +21,36 @@ function Product(name, fileExtension ='jpg'){
   allProducts.push(this);
 }
 
-//Instances of the Products Object Constructor
-new Product('bag');
-new Product('banana');
-new Product('bathroom');
-new Product('boots');
-new Product('breakfast');
-new Product('bubblegum');
-new Product('chair');
-new Product('cthulhu');
-new Product('dog-duck');
-new Product('dragon');
-new Product('pen');
-new Product('pet-sweep');
-new Product('scissors');
-new Product('shark');
-new Product('sweep', 'png');
-new Product('tauntaun');
-new Product('unicorn');
-new Product('water-can');
-new Product('wine-glass');
+//retrieve from local storage
+//1. get from local storage
+let retrievedProducts = localStorage.getItem('products');
+if(retrievedProducts){
+  //2. parse the data
+  let parsedProducts = JSON.parse(retrievedProducts);
+  allProducts = parsedProducts;
+}else{
+  //Instances of the Products Object Constructor
+  new Product('bag');
+  new Product('banana');
+  new Product('bathroom');
+  new Product('boots');
+  new Product('breakfast');
+  new Product('bubblegum');
+  new Product('chair');
+  new Product('cthulhu');
+  new Product('dog-duck');
+  new Product('dragon');
+  new Product('pen');
+  new Product('pet-sweep');
+  new Product('scissors');
+  new Product('shark');
+  new Product('sweep', 'png');
+  new Product('tauntaun');
+  new Product('unicorn');
+  new Product('water-can');
+  new Product('wine-glass');
+}
+
 
 // Selects a Random Product
 function selectRandomProductIndex(){
@@ -87,7 +97,10 @@ function handleProductClick(event){
   renderRandomProduct();
   if(clicks === clicksAllowed){
     myContainer.removeEventListener('click', handleProductClick);
-    alert('You have clicked 25 times thanks for your input! Click View Results to see results');
+    //Save 'data' to local storage allproducts in this case
+    //1. Str
+    let stringfiedProducts = JSON.stringify(allProducts);
+    localStorage.setItem('products', stringfiedProducts);
   }
 }
 
@@ -140,12 +153,12 @@ function renderChart (){
         label: '# of Views',
         data: views,
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)'
+          'rgba(255, 99, 132, 0.5)',
+          'rgba(54, 162, 235, 0.5)',
+          'rgba(255, 206, 86, 0.5)',
+          'rgba(75, 192, 192, 0.5)',
+          'rgba(153, 102, 255, 0.5)',
+          'rgba(255, 159, 64, 0.5)'
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
